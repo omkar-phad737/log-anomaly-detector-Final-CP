@@ -1,0 +1,8 @@
+# Normal file-server activity
+2026-09-30 09:12:00 user=202 ip=10.0.4.35 event=LOGIN
+2026-09-30 09:12:01 user=202 ip=10.0.4.35 event=AUTH_SUCCESS status=SUCCESS
+2026-09-30 09:13:00 user=202 ip=10.0.4.35 event=USER_ACCESS
+2026-09-30 09:15:30 user=202 ip=10.0.4.35 event=API_ACCESS
+2026-09-30 09:16:00 user=202 ip=10.0.4.35 event=FILE_ACCESS
+2026-09-30 09:18:45 user=202 ip=10.0.4.35 event=FILE_DELETE
+2026-09-30 09:20:00 user=202 ip=10.0.4.35 event=LOGOUT

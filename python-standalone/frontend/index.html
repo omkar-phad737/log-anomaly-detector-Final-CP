@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automatic Log Anomaly Detector — Using Finite Automata</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">◉</div>
+        <div>
+          <h1>Automatic Log Anomaly Detector <span class="accent">Using Finite Automata</span></h1>
+          <p>Detect suspicious behavioral sequences using DFA-based analysis</p>
+        </div>
+      </div>
+      <a class="badge-link" href="/docs" target="_blank" rel="noopener">API docs</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- statistics -->
+    <section class="stats-grid" id="stats-grid">
+      <div class="stat-card"><div class="stat-icon cyan">∑</div><div><div class="stat-value" id="stat-total">—</div><div class="stat-label">Total Events</div></div></div>
+      <div class="stat-card"><div class="stat-icon green">✓</div><div><div class="stat-value" id="stat-normal">—</div><div class="stat-label">Normal Events</div></div></div>
+      <div class="stat-card"><div class="stat-icon amber">!</div><div><div class="stat-value" id="stat-anomalies">—</div><div class="stat-label">Anomalies</div></div></div>
+      <div class="stat-card"><div class="stat-icon red">⛔</div><div><div class="stat-value" id="stat-critical">—</div><div class="stat-label">Critical Anomalies</div></div></div>
+    </section>
+
+    <div class="two-col">
+      <!-- left -->
+      <div class="col">
+        <section class="card">
+          <h2>1 · Upload log</h2>
+          <div id="dropzone" class="dropzone" tabindex="0">
+            <p><strong>Drop a log file here</strong> or click to browse</p>
+            <p class="muted">.txt / .log / .out · max 512 KB · content is parsed, never executed</p>
+            <input type="file" id="file-input" accept=".txt,.log,.out" hidden />
+          </div>
+          <textarea id="log-text" rows="8" placeholder="…or paste log lines here&#10;2026-09-30 10:00:01 user=101 event=LOGIN"></textarea>
+          <div class="row">
+            <button id="analyze-btn" class="btn primary" disabled>Analyze Log</button>
+            <span id="filename-chip" class="chip" hidden></span>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Sample logs</h2>
+          <div class="sample-grid" id="sample-grid"></div>
+        </section>
+      </div>
+
+      <!-- right -->
+      <div class="col">
+        <section class="card">
+          <h2>Event sequence</h2>
+          <div id="sequence" class="sequence"><span class="muted">Analyze a log to see its event sequence w = e₁·e₂·…·eₙ.</span></div>
+        </section>
+
+        <section class="card">
+          <h2>Detection results</h2>
+          <div class="table-scroll">
+            <table id="results-table">
+              <thead>
+                <tr><th>#</th><th>Event</th><th>Previous state</th><th>Current state</th><th>Status</th><th>Severity</th><th>Reason</th></tr>
+              </thead>
+              <tbody id="results-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Anomaly details</h2>
+          <div id="details" class="details muted">Click a row in the results table (or a chip in the sequence) to inspect it.</div>
+        </section>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2>Automaton visualization — M = (Q, Σ, δ, q0, F)</h2>
+      <div class="svg-scroll">
+        <svg id="dfa-svg" viewBox="0 0 1000 620" role="img" aria-label="DFA state diagram"></svg>
+      </div>
+      <div class="legend">
+        <span><span class="dot dot-state"></span> state</span>
+        <span><span class="dot dot-accept"></span> accepting state (F)</span>
+        <span><span class="dot dot-current"></span> current state</span>
+        <span><span class="dot dot-invalid"></span> invalid transition</span>
+        <span class="mono red">✗ EVENT</span><span>no transition defined for that symbol</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Analysis history <span class="muted small">(SQLite)</span></h2>
+      <div class="table-scroll">
+        <table id="history-table">
+          <thead>
+            <tr><th>ID</th><th>When (UTC)</th><th>File</th><th>Verdict</th><th>Events</th><th>Anomalies</th><th>Critical</th><th></th></tr>
+          </thead>
+          <tbody id="history-body"></tbody>
+        </table>
+      </div>
+      <div class="row right">
+        <button id="clear-history" class="btn ghost small">Clear history</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Evaluation (labelled samples)</h2>
+      <div class="metrics-grid" id="metrics-grid"></div>
+      <div class="table-scroll">
+        <table id="eval-table">
+          <thead><tr><th>Sample file</th><th>Label</th><th>Predicted</th><th>Events</th><th>Anomalies</th><th>Critical</th><th>Time (ms)</th><th>Result</th></tr></thead>
+          <tbody id="eval-body"></tbody>
+        </table>
+      </div>
+      <p class="muted small" id="eval-disclaimer"></p>
+    </section>
+
+    <footer>
+      Rule/DFA-based academic prototype · Formal Language &amp; Automata Theory · no machine learning involved
+    </footer>
+  </main>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

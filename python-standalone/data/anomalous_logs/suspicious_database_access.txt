@@ -1,0 +1,5 @@
+# Administrative + database access without any privilege change
+2026-09-30 16:20:04 user=405 ip=10.0.9.8 event=LOGIN
+2026-09-30 16:20:05 user=405 ip=10.0.9.8 event=AUTH_SUCCESS status=SUCCESS
+2026-09-30 16:21:30 user=405 ip=10.0.9.8 event=ADMIN_ACCESS
+2026-09-30 16:22:12 user=405 ip=10.0.9.8 event=DATABASE_ACCESS

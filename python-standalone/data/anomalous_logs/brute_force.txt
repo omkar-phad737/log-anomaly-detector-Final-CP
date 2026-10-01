@@ -1,0 +1,6 @@
+# Repeated authentication failures followed by admin access
+2026-09-30 23:41:02 user=101 ip=203.0.113.45 event=LOGIN
+2026-09-30 23:41:05 user=101 ip=203.0.113.45 event=AUTH_FAILURE status=FAILURE
+2026-09-30 23:41:11 user=101 ip=203.0.113.45 event=AUTH_FAILURE status=FAILURE
+2026-09-30 23:41:18 user=101 ip=203.0.113.45 event=AUTH_FAILURE status=FAILURE
+2026-09-30 23:42:40 user=101 ip=203.0.113.45 event=ADMIN_ACCESS

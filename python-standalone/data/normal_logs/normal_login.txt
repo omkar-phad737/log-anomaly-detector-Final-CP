@@ -1,0 +1,6 @@
+# Normal user session — expected workflow
+2026-09-30 10:00:01 user=101 ip=10.0.4.12 event=LOGIN
+2026-09-30 10:00:02 user=101 ip=10.0.4.12 event=AUTH_SUCCESS status=SUCCESS
+2026-09-30 10:02:10 user=101 ip=10.0.4.12 event=FILE_ACCESS
+2026-09-30 10:03:15 user=101 ip=10.0.4.12 event=FILE_ACCESS
+2026-09-30 10:05:20 user=101 ip=10.0.4.12 event=LOGOUT
